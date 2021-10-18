@@ -7,7 +7,8 @@ use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\DateTime;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Valid;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
@@ -15,6 +16,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     normalizationContext: ['groups' => ['read:collection']],
     denormalizationContext: ['groups' => ['write:Post']],
+    collectionOperations: [
+        'get',
+        'post'
+    ],
     itemOperations: [
         'put',
         'delete',
