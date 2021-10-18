@@ -7,6 +7,7 @@ use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
@@ -35,7 +36,10 @@ class Post
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['read:collection', 'write:Post'])]
+    #[
+        Groups(['read:collection', 'write:Post']),
+        Length(min: 5)
+        ]
     private $title;
 
     /**
