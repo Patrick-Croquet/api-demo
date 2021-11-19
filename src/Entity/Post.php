@@ -80,8 +80,22 @@ class Post
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="posts")
      */
-    #[Groups(['read:item', 'write:Post'])]
+    #[
+        Groups(['read:item', 'write:Post']),
+        Valid()
+    ]
     private $category;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    #[Groups(['read:item', 'write:Post'])]
+    private $description;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default":"0"})
+     */
+    private $online = false;
 
     public function __construct(){
         $this->createdAt = new \DateTime();
@@ -160,6 +174,30 @@ class Post
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getOnline(): ?bool
+    {
+        return $this->online;
+    }
+
+    public function setOnline(bool $online): self
+    {
+        $this->online = $online;
 
         return $this;
     }
